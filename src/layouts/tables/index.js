@@ -92,7 +92,7 @@ function Tables() {
     const selectedcommitId = e.commit_id;
     console.log("selectedcommitId", selectedcommitId)
     axios
-      .get(`https://c1a7-2405-201-d01a-18af-5458-bba5-a957-9f8a.ngrok-free.app/v1/metrics?commit_id=` + selectedcommitId)
+      .get(`https://2607-115-110-224-178.ngrok-free.app/v1/metrics?commit_id=` + selectedcommitId)
       .then((resp) => {
         console.log("resp", resp);
         const data = resp.data;
@@ -168,21 +168,15 @@ function Tables() {
                   PR details
                 </MDTypography>
               </MDBox>
-              {/*<MDBox pt={3}>*/}
-              {/*  <DataTable*/}
-              {/*    table={{ columns: pColumns, rows: pRows }}*/}
-              {/*    isSorted={false}*/}
-              {/*    entriesPerPage={false}*/}
-              {/*    showTotalEntries={false}*/}
-              {/*    noEndBorder*/}
-              {/*  />*/}
-              {/*</MDBox>*/}
-
-
               <div style={{marginTop:30}} className="col-md-12">
                 <table className="table table-hover">
                   <thead>
                   <tr style={{ fontSize: 14 }}>
+                    <th style={{
+                      background: "#49a3f1",
+                      color: "white"
+                    }} scope="col">Service
+                    </th>
                     <th style={{
                       background: "#49a3f1",
                       color: "white"
@@ -219,7 +213,8 @@ function Tables() {
                   {prdetails.map((list, index) => {
                     return (
                       <tr style={{ fontSize: 14 }} key={index}>
-                        <th scope="row">{list.pr_num}</th>
+                        <td>{list.service}</td>
+                        <td>{list.pr_num}</td>
                         <td>{list.branch}</td>
                         <td onClick={() => checkCommitId(list)}>{list.commit_id}</td>
                         <td>{list.deleted_lines}</td>
@@ -240,7 +235,6 @@ function Tables() {
                   </tbody>
                 </table>
               </div>
-
             </Card>
           </Grid>
         </Grid>
