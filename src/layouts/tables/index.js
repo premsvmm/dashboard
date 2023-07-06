@@ -216,7 +216,7 @@ function Tables() {
                     return (
                       <tr style={{ fontSize: 14 }} key={index}>
                         <td>{list.service}</td>
-                        <td>{list.pr_num}</td>
+                        <td><a target="_blank" href={`https://github.com/razorpay/${list.service}/pull/${list.pr_num}`}>{list.pr_num}</a></td>
                         <td>{list.branch}</td>
                         <td onClick={() => checkCommitId(list)}>{list.commit_id.slice(0,6)}</td>
                         <td>{list.deleted_lines}</td>
