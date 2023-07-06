@@ -47,7 +47,11 @@ function Projects() {
     "id": '',
     "integration_threshold": 0,
     "service": '',
-    "unit_threshold": 0
+    "unit_threshold": 0,
+    "unit_failed_threshold": '',
+    "unit_skipped_threshold":'',
+    "integration_failed_threshold":'',
+    "integration_skipped_threshold":''
   })
   const [unittest, setunitDetails] = useState({
     "commit_id": '',
@@ -55,7 +59,10 @@ function Projects() {
     "overall_coverage": '',
     "modified_coverage": '',
     "pass": '',
-    "skipped": ''
+    "skipped": '',
+    "statements":'',
+    "lines_not_covered":''
+
   })
   const [e2etest, sete2eTestDetails] = useState({
     "commit_id": '',
@@ -63,7 +70,9 @@ function Projects() {
     "overall_coverage": '',
     "modified_coverage": '',
     "pass": '',
-    "skipped": ''
+    "skipped": '',
+    "statements":'',
+    "lines_not_covered":''
   })
   const [integrationcoverage, setintegrationcoverage] = useState({
     "commit_id": '',
@@ -71,14 +80,16 @@ function Projects() {
     "overall_coverage": '',
     "modified_coverage": '',
     "pass": '',
-    "skipped": ''
+    "skipped": '',
+    "statements":'',
+    "lines_not_covered":''
   })
 
 
 //first API Parsed
   useEffect(() => {
     axios
-      .get(`https://c1a7-2405-201-d01a-18af-5458-bba5-a957-9f8a.ngrok-free.app/v1/services`)
+      .get(`https://2607-115-110-224-178.ngrok-free.app/v1/services`)
       .then((resp) => {
         console.log("resp", resp);
         const data = resp.data;
@@ -102,14 +113,18 @@ function Projects() {
           "id": menudata.id,
           "integration_threshold": menudata.integration_threshold,
           "service": menudata.service,
-          "unit_threshold": menudata.unit_threshold
+          "unit_threshold": menudata.unit_threshold,
+          "unit_failed_threshold": menudata.unit_failed_threshold,
+          "unit_skipped_threshold": menudata.unit_skipped_threshold,
+          "integration_failed_threshold": menudata.integration_failed_threshold,
+          "integration_skipped_threshold": menudata.integration_skipped_threshold
         })
       }
     }
     const selectedService = getobject
       console.log("selected", selectedService)
       axios
-        .get(`https://c1a7-2405-201-d01a-18af-5458-bba5-a957-9f8a.ngrok-free.app/v1/pr?service_id=` + selectedService)
+        .get(`https://2607-115-110-224-178.ngrok-free.app/v1/pr?service_id=` + selectedService)
         .then((resp) => {
           console.log("resp", resp);
           const data = resp.data;
@@ -128,7 +143,7 @@ function Projects() {
       const selectedcommitId = e.commit_id;
       console.log("selectedcommitId", selectedcommitId)
       axios
-        .get(`https://c1a7-2405-201-d01a-18af-5458-bba5-a957-9f8a.ngrok-free.app/v1/metrics?commit_id=` + selectedcommitId)
+        .get(`https://2607-115-110-224-178.ngrok-free.app/v1/metrics?commit_id=` + selectedcommitId)
         .then((resp) => {
           console.log("resp", resp);
           const data = resp.data;
@@ -145,7 +160,9 @@ function Projects() {
             "failed": unittest.failed,
             "skipped": unittest.skipped,
             "overall_coverage": unittest.overall_coverage,
-            "modified_coverage": unittest.modified_coverage
+            "modified_coverage": unittest.modified_coverage,
+            "statements":unittest.statements,
+            "lines_not_covered": unittest.lines_not_covered
           });
           sete2eTestDetails({
             "commit_id": e2etest.commit_id,
@@ -153,7 +170,9 @@ function Projects() {
             "failed": e2etest.failed,
             "skipped": e2etest.skipped,
             "overall_coverage": e2etest.overall_coverage,
-            "modified_coverage": e2etest.modified_coverage
+            "modified_coverage": e2etest.modified_coverage,
+            "statements":e2etest.statements,
+            "lines_not_covered": e2etest.lines_not_covered
           });
 
           setintegrationcoverage({
@@ -162,7 +181,9 @@ function Projects() {
             "failed": integrationcoverage.failed,
             "skipped": integrationcoverage.skipped,
             "overall_coverage": integrationcoverage.overall_coverage,
-            "modified_coverage": integrationcoverage.modified_coverage
+            "modified_coverage": integrationcoverage.modified_coverage,
+            "statements":integrationcoverage.statements,
+            "lines_not_covered": integrationcoverage.lines_not_covered
           });
         })
         .catch(function(error) {
@@ -368,7 +389,12 @@ function Projects() {
                       <th style={{
                         background: "#49a3f1",
                         color: "white"
-                      }} scope="col">Quality Gate
+                      }} scope="col">Statements
+                      </th>
+                      <th style={{
+                        background: "#49a3f1",
+                        color: "white"
+                      }} scope="col">Quality Risk
                       </th>
                     </tr>
                     </thead>
@@ -380,7 +406,17 @@ function Projects() {
                       <td>{unittest.skipped}</td>
                       <td>{unittest.overall_coverage}</td>
                       <td>{unittest.modified_coverage}</td>
-                      <td>{unittest.modified_coverage <= selectedservice.unit_threshold || unittest.overall_coverage <= selectedservice.unit_threshold ? "Failed" : "Pass"}</td>
+                      <td>{unittest.statements}</td>
+                      <td>
+                        <HtmlTooltip
+                        title={
+                          <React.Fragment>
+                            {unittest.modified_coverage <= selectedservice.unit_threshold || unittest.overall_coverage <= selectedservice.unit_threshold || unittest.failed > selectedservice.unit_failed_threshold || unittest.skipped > selectedservice.unit_skipped_threshold? <p style={{color:"red"}}>1.Overall Coverage is less than threshold required:50<br/>2.Modified Coverage is less than threshold required:50<br/>3.No. of failed tests are greater than threshold failed tests:5<br/>4.No. of skipped tests are greater than threshold skipped tests:5</p> : "Pass"}
+                          </React.Fragment>
+                        }
+                      >
+                        <Button>{unittest.modified_coverage <= selectedservice.unit_threshold || unittest.overall_coverage <= selectedservice.unit_threshold || unittest.failed > selectedservice.unit_failed_threshold || unittest.skipped > selectedservice.unit_skipped_threshold? "Failed" : "Pass"}</Button>
+                      </HtmlTooltip></td>
                     </tr>
                     <tr style={{ fontSize: 14 }}>
                       <td scope="row">E2E Test</td>
@@ -389,7 +425,18 @@ function Projects() {
                       <td>{e2etest.skipped}</td>
                       <td>{e2etest.overall_coverage}</td>
                       <td>{e2etest.modified_coverage}</td>
-                      <td>{e2etest.modified_coverage <= selectedservice.integration_threshold || e2etest.overall_coverage <= selectedservice.integration_threshold ? "Failed" : "Pass"}</td>
+                      <td>{e2etest.statements}</td>
+                      <td>
+                        <HtmlTooltip
+                          title={
+                            <React.Fragment>
+                              {e2etest.modified_coverage <= selectedservice.integration_threshold || e2etest.overall_coverage <= selectedservice.integration_threshold || e2etest.failed > selectedservice.integration_failed_threshold || e2etest.skipped > selectedservice.integration_skipped_threshold? <p style={{color:"red"}}>1.Overall Coverage is less than threshold required:50<br/>2.Modified Coverage is less than threshold required:50<br/>3.No. of failed tests are greater than threshold failed tests:5<br/>4.No. of skipped tests are greater than threshold skipped tests:5</p> : "Pass"}
+                            </React.Fragment>
+                          }
+                        >
+                          <Button>{e2etest.modified_coverage <= selectedservice.integration_threshold || e2etest.overall_coverage <= selectedservice.integration_threshold || e2etest.failed > selectedservice.integration_failed_threshold || e2etest.skipped > selectedservice.integration_skipped_threshold? "Failed" : "Pass"}</Button>
+                        </HtmlTooltip>
+                      </td>
                     </tr>
                     <tr style={{ fontSize: 14 }}>
                       <td scope="row">Integration Coverage Test</td>
@@ -398,12 +445,45 @@ function Projects() {
                       <td>{integrationcoverage.skipped}</td>
                       <td>{integrationcoverage.overall_coverage}</td>
                       <td>{integrationcoverage.modified_coverage}</td>
-                      <td>{integrationcoverage.modified_coverage <= selectedservice.integration_threshold || integrationcoverage.overall_coverage <= selectedservice.integration_threshold ? "Failed" : "Pass"}</td>
+                      <td>{integrationcoverage.statements}</td>
+                      <td> <HtmlTooltip
+                        title={
+                          <React.Fragment>
+                            {integrationcoverage.modified_coverage <= selectedservice.integration_threshold || integrationcoverage.overall_coverage <= selectedservice.integration_threshold || integrationcoverage.failed > selectedservice.integration_failed_threshold || integrationcoverage.skipped > selectedservice.integration_skipped_threshold? <p style={{color:"red"}}>1.Overall Coverage is less than threshold required:50<br/>2.Modified Coverage is less than threshold required:50<br/>3.No. of failed tests are greater than threshold failed tests:5<br/>4.No. of skipped tests are greater than threshold skipped tests:5</p> : "Pass"}
+                          </React.Fragment>
+                        }
+                      >
+                        <Button>{integrationcoverage.modified_coverage <= selectedservice.integration_threshold || integrationcoverage.overall_coverage <= selectedservice.integration_threshold || integrationcoverage.failed > selectedservice.integration_failed_threshold || integrationcoverage.skipped > selectedservice.integration_skipped_threshold? "Failed" : "Pass"}</Button>
+                      </HtmlTooltip></td>
                     </tr>
                     </tbody>
                   </table>
+
+                  <p style={{fontSize:16}}>Lines Not covered :</p>
+                  <div style={{background:"black", fontSize:14}}>
+                  <pre>
+                  <code style={{background:"black",color:"white"}}>
+                    {unittest.lines_not_covered}
+                  </code>
+                  </pre>
+                  </div>
+                  <div style={{background:"black", fontSize:14}}>
+                  <pre>
+                  <code style={{background:"black",color:"white"}}>
+                    {e2etest.lines_not_covered}
+                  </code>
+                  </pre>
+                  </div>
+                  <div style={{background:"black", fontSize:14}}>
+                  <pre>
+                  <code style={{background:"black",color:"white"}}>
+                    {integrationcoverage.lines_not_covered}
+                  </code>
+                  </pre>
+                  </div>
                 </div>
               </Box>
+
             </Modal>
           </MDBox>
         </Card>

@@ -92,7 +92,7 @@ function Tables() {
     const selectedcommitId = e.commit_id;
     console.log("selectedcommitId", selectedcommitId)
     axios
-      .get(`https://c1a7-2405-201-d01a-18af-5458-bba5-a957-9f8a.ngrok-free.app/v1/metrics?commit_id=` + selectedcommitId)
+      .get(`https://2607-115-110-224-178.ngrok-free.app/v1/metrics?commit_id=` + selectedcommitId)
       .then((resp) => {
         console.log("resp", resp);
         const data = resp.data;
