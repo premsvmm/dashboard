@@ -74,7 +74,7 @@ function Tables() {
 
   useEffect(() => {
     axios
-      .get(`https://2607-115-110-224-178.ngrok-free.app/v1/pr`)
+      .get(`https://quality-checks-base.dev.razorpay.in/v1/pr`)
       .then((resp) => {
         console.log("resp", resp);
         const data = resp.data;
@@ -92,7 +92,7 @@ function Tables() {
     const selectedcommitId = e.commit_id;
     console.log("selectedcommitId", selectedcommitId)
     axios
-      .get(`https://2607-115-110-224-178.ngrok-free.app/v1/metrics?commit_id=` + selectedcommitId)
+      .get(`https://quality-checks-base.dev.razorpay.in/v1/metrics?commit_id=` + selectedcommitId)
       .then((resp) => {
         console.log("resp", resp);
         const data = resp.data;
