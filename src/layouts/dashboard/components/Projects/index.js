@@ -308,7 +308,7 @@ function Projects() {
                 {prdetails.map((list, index) => {
                   return (
                     <tr style={{ fontSize: 14 }} key={index}>
-                      <th scope="row">{list.pr_num}</th>
+                      <th scope="row"><a target="_blank" href={`https://github.com/razorpay/scrooge/pull/${list.pr_num}`}>{list.pr_num}</a></th>
                       <td>{list.branch}</td>
                       <td>{list.github_status !== "pending" ? <><p onClick={() => checkCommitId(list)}>{list.commit_id.slice(0,6)}</p></>:<><p aria-disabled="true">{list.commit_id.slice(0,6)}</p></>}</td>
                       <td>{list.deleted_lines}</td>
@@ -418,6 +418,25 @@ function Projects() {
                         <Button>{unittest.modified_coverage <= selectedservice.unit_threshold || unittest.overall_coverage <= selectedservice.unit_threshold || unittest.failed > selectedservice.unit_failed_threshold || unittest.skipped > selectedservice.unit_skipped_threshold? "Failed" : "Pass"}</Button>
                       </HtmlTooltip></td>
                     </tr>
+
+                    <tr style={{ fontSize: 14 }}>
+                      <td scope="row">Integration Coverage Test</td>
+                      <td>{integrationcoverage.pass}</td>
+                      <td>{integrationcoverage.failed}</td>
+                      <td>{integrationcoverage.skipped}</td>
+                      <td>{integrationcoverage.overall_coverage}</td>
+                      <td>{integrationcoverage.modified_coverage}</td>
+                      <td>{integrationcoverage.statements}</td>
+                      <td> <HtmlTooltip
+                        title={
+                          <React.Fragment>
+                            {integrationcoverage.modified_coverage <= selectedservice.integration_threshold || integrationcoverage.overall_coverage <= selectedservice.integration_threshold || integrationcoverage.failed > selectedservice.integration_failed_threshold || integrationcoverage.skipped > selectedservice.integration_skipped_threshold? <p style={{color:"red"}}>1.Overall Coverage is less than threshold required:50<br/>2.Modified Coverage is less than threshold required:50<br/>3.No. of failed tests are greater than threshold failed tests:5<br/>4.No. of skipped tests are greater than threshold skipped tests:5</p> : <p style={{color:"green"}}>Quality risk status is Passed.</p>}
+                          </React.Fragment>
+                        }
+                      >
+                        <Button>{integrationcoverage.modified_coverage <= selectedservice.integration_threshold || integrationcoverage.overall_coverage <= selectedservice.integration_threshold || integrationcoverage.failed > selectedservice.integration_failed_threshold || integrationcoverage.skipped > selectedservice.integration_skipped_threshold? "Failed" : "Pass"}</Button>
+                      </HtmlTooltip></td>
+                    </tr>
                     <tr style={{ fontSize: 14 }}>
                       <td scope="row">E2E Test</td>
                       <td>{e2etest.pass}</td>
@@ -437,24 +456,6 @@ function Projects() {
                           <Button>{e2etest.modified_coverage <= selectedservice.integration_threshold || e2etest.overall_coverage <= selectedservice.integration_threshold || e2etest.failed > selectedservice.integration_failed_threshold || e2etest.skipped > selectedservice.integration_skipped_threshold? "Failed" : "Pass"}</Button>
                         </HtmlTooltip>
                       </td>
-                    </tr>
-                    <tr style={{ fontSize: 14 }}>
-                      <td scope="row">Integration Coverage Test</td>
-                      <td>{integrationcoverage.pass}</td>
-                      <td>{integrationcoverage.failed}</td>
-                      <td>{integrationcoverage.skipped}</td>
-                      <td>{integrationcoverage.overall_coverage}</td>
-                      <td>{integrationcoverage.modified_coverage}</td>
-                      <td>{integrationcoverage.statements}</td>
-                      <td> <HtmlTooltip
-                        title={
-                          <React.Fragment>
-                            {integrationcoverage.modified_coverage <= selectedservice.integration_threshold || integrationcoverage.overall_coverage <= selectedservice.integration_threshold || integrationcoverage.failed > selectedservice.integration_failed_threshold || integrationcoverage.skipped > selectedservice.integration_skipped_threshold? <p style={{color:"red"}}>1.Overall Coverage is less than threshold required:50<br/>2.Modified Coverage is less than threshold required:50<br/>3.No. of failed tests are greater than threshold failed tests:5<br/>4.No. of skipped tests are greater than threshold skipped tests:5</p> : <p style={{color:"green"}}>Quality risk status is Passed.</p>}
-                          </React.Fragment>
-                        }
-                      >
-                        <Button>{integrationcoverage.modified_coverage <= selectedservice.integration_threshold || integrationcoverage.overall_coverage <= selectedservice.integration_threshold || integrationcoverage.failed > selectedservice.integration_failed_threshold || integrationcoverage.skipped > selectedservice.integration_skipped_threshold? "Failed" : "Pass"}</Button>
-                      </HtmlTooltip></td>
                     </tr>
                     </tbody>
                   </table>
@@ -485,6 +486,7 @@ function Projects() {
                   </pre>
                   </div>
                 </div>
+                <a className="btn btn-primary" style={{ background: "#49a3f1"}} href="https://rzp-1018-nonprod-qa-common.s3.ap-south-1.amazonaws.com/code_coverage/scrooge/301a00bf0105f2bce8d6219962a49ad038dfce4d/coverage.html?response-content-disposition=inline&X-Amz-Security-Token=IQoJb3JpZ2luX2VjENL%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCmFwLXNvdXRoLTEiRzBFAiEA9avg9WZVXT03Odo5ZR2EjTLVcSMgdbS5OXgWngyKnAICIGwm70KR%2FS6aUBOEI9K73AfybraCkAafqJwQfIaKnkmOKs4DCEsQAxoMMTAxODYwMzI4MTE2IgwC0Ixp1Aiz1jr5fY4qqwNM73Dj15UqiwGhuYUmxi3RrU%2Fv9CPHnX5X%2BLaIVX%2BdYIbycpWcecaGXC1VqSirmAnzLZ2wewgZPYIUa8Vu1kC4oMqvbPoGBNE0Sgd10mnmX9gFt54ZkO2xf43pyAuy69RAwwzUhPmUoAntqox0eDwZoawjTIGQeoaWULXFbk%2FZk2sjm4Vv6hESK9UIx%2Fx%2BG%2FlNSpS50r9iMW4qaqs8wTSRN%2BS1hu7rjHaSLYF8AQzfaV9SOEGxgqGktQWHE8AzGefngsQZg7CPoohJHbkZppZ1MP3pm%2FOYNAgHsDI4C3ZIsCZn70NNKmbaDWeuWxtCHbfKI93Un8QVGyGme6bNd1J8PJAY17oMq4iBJcc9sIvnXSUKnGGYL0eOTg3PUtaij9EfvwKj7m%2FAB%2BWFrSCxIOoEWFq4wNPJrMihunj4DcPJYYyqy9BC0wwN431UZ%2BIAUqJZRzcXsUkiwpS1vNCXu21sjD4e2gWUBQ6sMC5o7y4d7S5WVOYZYG5IAxb3b69J66KlnWneHXnXVlGksHcbo1SarGIhrtm2plHiNNR%2FL497r8pxl5hFIT5%2FpIRNMP%2F%2Fm6UGOoQCordFz4HLmfNGGFsB6%2BuO1eJZRC%2BEIbBa%2FjmV7y%2BnKn8zGHTh%2F2dPjEAOnf%2BfVkx3m7BzihDSDZIQ7GmICOJb%2B3kcgqInOZHK8W8zGytbqpKhRLqGI%2BlSC4Z%2Bmey73538Vst5E%2FOHG1TXk5S2IcWhacSUyJgGkxOZmiD2JGGy403Cgsc4ya1hbS%2Bgdf3XRA%2BRZtluHTVzQFuxY%2F8iN26eWSZdo1tK7oeNVTE0g%2Brecoj5BeeZ1ib7J%2FHshi9RafmSH94b%2FRS7oOeNok9v0kXGnGLd%2F48NfO0aRcuQuVRJ1eAiIaegzf%2BjYt6Nl3HhDsRwXYeMXUzybsY4fefLoM9hwlxBw%2FI%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20230706T175746Z&X-Amz-SignedHeaders=host&X-Amz-Expires=43200&X-Amz-Credential=ASIARPN2ZIK2JZUBH7AH%2F20230706%2Fap-south-1%2Fs3%2Faws4_request&X-Amz-Signature=8942e9d8dec3d0d748d5287088f98cc60e83530980a44f0a3345dd764145f0d9#file0">Click to Download</a>
               </Box>
             </Modal>
           </MDBox>
