@@ -33,7 +33,7 @@ import DataTable from "examples/Tables/DataTable";
 import data from "layouts/dashboard/components/Projects/data";
 import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";
-import { FormControl, InputLabel, Modal, Paper, Select, TableCell, TableHead } from "@mui/material";
+import { FormControl, InputLabel, Modal, Paper, Select, TableCell, TableHead, tooltipClasses } from "@mui/material";
 import TableRow from "@mui/material/TableRow";
 import TableBody from "@mui/material/TableBody";
 import Button from "@mui/material/Button";
@@ -41,6 +41,9 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import DashboardLayout from "../../../../examples/LayoutContainers/DashboardLayout";
 import Grid from "@mui/material/Grid";
+import Tooltip from "@mui/material/Tooltip";
+import { styled } from "@mui/material/styles";
+
 const style = {
   position: 'absolute',
   top: '50%',
@@ -78,10 +81,29 @@ function Projects() {
   const openMenu = ({ currentTarget }) => setMenu(currentTarget);
   const closeMenu = () => setMenu(null);
 
+
+  const [selectedservice,setselectservice] = useState({
+    "id": '',
+    "integration_threshold": 0,
+    "service" :'',
+    "unit_threshold" : 0
+  })
+
   const selectoption =(e)=>{
     console.log(e)
+const getobject = e.target.value;
 
-const selectedService = e.target.value;
+    for(let menudata of menu){
+      if(menudata.id ==getobject){
+        console.log(menudata)
+        setselectservice({    "id": menudata.id,
+          "integration_threshold": menudata.integration_threshold,
+          "service" :menudata.service,
+          "unit_threshold" : menudata.unit_threshold})
+      }
+    }
+
+const selectedService = getobject
     console.log("selected",selectedService)
     axios
       .get(`https://c1a7-2405-201-d01a-18af-5458-bba5-a957-9f8a.ngrok-free.app/v1/pr?service_id=` + selectedService)
@@ -190,6 +212,21 @@ const selectedService = e.target.value;
     setAge(event.target.value);
   };
 
+  const setselectedservice =(item)=>{
+    console.log("item",item)
+  }
+
+  const HtmlTooltip = styled(({ className, ...props }) => (
+    <Tooltip {...props} classes={{ popper: className }} />
+  ))(({ theme }) => ({
+    [`& .${tooltipClasses.tooltip}`]: {
+      backgroundColor: '#f5f5f9',
+      color: 'rgba(0, 0, 0, 0.87)',
+      maxWidth: 520,
+      fontSize: theme.typography.pxToRem(11),
+      border: '1px solid #dadde9',
+    },
+  }));
 
   return (
 <>
@@ -220,6 +257,7 @@ const selectedService = e.target.value;
         </Grid>
       </MDBox>
 
+
       <MDBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
 
         <div className="col-md-4" >
@@ -238,6 +276,7 @@ const selectedService = e.target.value;
                 <option
                   name={element.id}
                   value={element.id}
+
                 >
                   {element.service}
                 </option>
@@ -248,13 +287,7 @@ const selectedService = e.target.value;
         </div>
       </MDBox>
       <MDBox>
-        {/*<DataTable*/}
-        {/*  table={{ columns, rows }}*/}
-        {/*  showTotalEntries={false}*/}
-        {/*  isSorted={false}*/}
-        {/*  noEndBorder*/}
-        {/*  entriesPerPage={false}*/}
-        {/*/>*/}
+
 <div className="col-md-12">
         <table className="table table-hover">
           <thead>
@@ -271,11 +304,6 @@ const selectedService = e.target.value;
               color: "white"}} scope="col">Deleted Lines</th>
             <th style={{background: "#49a3f1",
               color: "white"}} scope="col">Quality Gate Status</th>
-            <th style={{background: "#49a3f1",
-              color: "white"}} scope="col">notes</th>
-            {/*<th scope="col">Service Id</th>*/}
-            {/*<th scope="col">Updated At</th>*/}
-            {/*<th scope="col">Created At</th>*/}
           </tr>
           </thead>
           <tbody>
@@ -287,11 +315,16 @@ const selectedService = e.target.value;
             <td onClick={()=>checkCommitId(list)}>{list.commit_id}</td>
             <td>{list.deleted_lines}</td>
             <td>{list.new_lines}</td>
-            <td>{list.github_status}</td>
-            <td>{list.notes}</td>
-            {/*<td>{list.service_id}</td>*/}
-            {/*<td>{list.updated_at}</td>*/}
-            {/*<td>{list.created_at}</td>*/}
+            <td>
+              <HtmlTooltip
+              title={
+                <React.Fragment>
+                  {list.notes}
+                </React.Fragment>
+              }
+            >
+              <Button>{list.github_status}</Button>
+            </HtmlTooltip></td>
           </tr>
               )})}
           </tbody>
@@ -326,6 +359,8 @@ const selectedService = e.target.value;
                     color: "white"}} scope="col">Overall Coverage</th>
                   <th style={{background: "#49a3f1",
                     color: "white"}} scope="col">Modified Coverage</th>
+                  <th style={{background: "#49a3f1",
+                    color: "white"}} scope="col">Quality Gate</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -336,6 +371,7 @@ const selectedService = e.target.value;
                   <td>{unittest.skipped}</td>
                   <td>{unittest.overall_coverage}</td>
                   <td>{unittest.modified_coverage}</td>
+                  <td>{unittest.modified_coverage <= selectedservice.integration_threshold && unittest.overall_coverage <= selectedservice.integration_threshold ? "Failed" : "Pass" }</td>
                 </tr>
                 <tr style={{fontSize:14}}>
                   <td scope="row">E2E Test</td>
@@ -344,6 +380,7 @@ const selectedService = e.target.value;
                   <td>{e2etest.skipped}</td>
                   <td>{e2etest.overall_coverage}</td>
                   <td>{e2etest.modified_coverage}</td>
+                  <td>{e2etest.modified_coverage <= selectedservice.integration_threshold && e2etest.overall_coverage <= selectedservice.integration_threshold ? "Failed" : "Pass" }</td>
                 </tr>
                 <tr style={{fontSize:14}}>
                   <td scope="row">Integration Coverage Test</td>
@@ -352,6 +389,7 @@ const selectedService = e.target.value;
                   <td>{integrationcoverage.skipped}</td>
                   <td>{integrationcoverage.overall_coverage}</td>
                   <td>{integrationcoverage.modified_coverage}</td>
+                  <td>{integrationcoverage.modified_coverage <= selectedservice.integration_threshold && integrationcoverage.overall_coverage <= selectedservice.integration_threshold ? "Failed" : "Pass" }</td>
                 </tr>
 
                 </tbody>
