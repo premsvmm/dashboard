@@ -35,6 +35,7 @@ const style = {
   p: 4,
 };
 function Projects() {
+  const baseUrl = "https://quality-checks-base.ext.dev.razorpay.in";
   const { columns, rows } = data();
   const [menu, setMenu] = useState([]);
   const [prdetails, setPrdetails] = useState([])
@@ -89,7 +90,7 @@ function Projects() {
 //first API Parsed
   useEffect(() => {
     axios
-      .get(`https://quality-checks-base.ext.dev.razorpay.in/v1/services`)
+      .get(baseUrl+`/v1/services`)
       .then((resp) => {
         console.log("resp", resp);
         const data = resp.data;
@@ -124,7 +125,7 @@ function Projects() {
     const selectedService = getobject
       console.log("selected", selectedService)
       axios
-        .get(`https://quality-checks-base.ext.dev.razorpay.in/v1/pr?service_id=` + selectedService)
+        .get(baseUrl+`/v1/pr?service_id=` + selectedService)
         .then((resp) => {
           console.log("resp", resp);
           const data = resp.data;
@@ -143,7 +144,7 @@ function Projects() {
       const selectedcommitId = e.commit_id;
       console.log("selectedcommitId", selectedcommitId)
       axios
-        .get(`https://quality-checks-base.ext.dev.razorpay.in/v1/metrics?commit_id=` + selectedcommitId)
+        .get(baseUrl+`/v1/metrics?commit_id=` + selectedcommitId)
         .then((resp) => {
           console.log("resp", resp);
           const data = resp.data;
@@ -388,7 +389,7 @@ function Projects() {
                       <th style={{
                         background: "#49a3f1",
                         color: "white"
-                      }} scope="col">Statements
+                      }} scope="col">Statements Covered
                       </th>
                       <th style={{
                         background: "#49a3f1",

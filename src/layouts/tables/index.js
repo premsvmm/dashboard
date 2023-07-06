@@ -38,6 +38,8 @@ import Tooltip from "@mui/material/Tooltip";
 import { tooltipClasses } from "@mui/material";
 
 function Tables() {
+  const baseUrl = "https://quality-checks-base.ext.dev.razorpay.in";
+
   const { columns, rows } = authorsTableData();
   const { columns: pColumns, rows: pRows } = projectsTableData();
 
@@ -74,7 +76,7 @@ function Tables() {
 
   useEffect(() => {
     axios
-      .get(`https://quality-checks-base.ext.dev.razorpay.in/v1/pr`)
+      .get(baseUrl+`/v1/pr`)
       .then((resp) => {
         console.log("resp", resp);
         const data = resp.data;
@@ -92,7 +94,7 @@ function Tables() {
     const selectedcommitId = e.commit_id;
     console.log("selectedcommitId", selectedcommitId)
     axios
-      .get(`https://quality-checks-base.ext.dev.razorpay.in/v1/metrics?commit_id=` + selectedcommitId)
+      .get(baseUrl+`/v1/metrics?commit_id=` + selectedcommitId)
       .then((resp) => {
         console.log("resp", resp);
         const data = resp.data;
@@ -216,7 +218,7 @@ function Tables() {
                         <td>{list.service}</td>
                         <td>{list.pr_num}</td>
                         <td>{list.branch}</td>
-                        <td onClick={() => checkCommitId(list)}>{list.commit_id}</td>
+                        <td onClick={() => checkCommitId(list)}>{list.commit_id.slice(0,6)}</td>
                         <td>{list.deleted_lines}</td>
                         <td>{list.new_lines}</td>
                         <td>
