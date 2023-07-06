@@ -168,21 +168,15 @@ function Tables() {
                   PR details
                 </MDTypography>
               </MDBox>
-              {/*<MDBox pt={3}>*/}
-              {/*  <DataTable*/}
-              {/*    table={{ columns: pColumns, rows: pRows }}*/}
-              {/*    isSorted={false}*/}
-              {/*    entriesPerPage={false}*/}
-              {/*    showTotalEntries={false}*/}
-              {/*    noEndBorder*/}
-              {/*  />*/}
-              {/*</MDBox>*/}
-
-
               <div style={{marginTop:30}} className="col-md-12">
                 <table className="table table-hover">
                   <thead>
                   <tr style={{ fontSize: 14 }}>
+                    <th style={{
+                      background: "#49a3f1",
+                      color: "white"
+                    }} scope="col">Service
+                    </th>
                     <th style={{
                       background: "#49a3f1",
                       color: "white"
@@ -219,7 +213,8 @@ function Tables() {
                   {prdetails.map((list, index) => {
                     return (
                       <tr style={{ fontSize: 14 }} key={index}>
-                        <th scope="row">{list.pr_num}</th>
+                        <td>{list.service}</td>
+                        <td>{list.pr_num}</td>
                         <td>{list.branch}</td>
                         <td onClick={() => checkCommitId(list)}>{list.commit_id}</td>
                         <td>{list.deleted_lines}</td>
@@ -240,7 +235,6 @@ function Tables() {
                   </tbody>
                 </table>
               </div>
-
             </Card>
           </Grid>
         </Grid>

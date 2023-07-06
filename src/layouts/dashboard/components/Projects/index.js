@@ -319,10 +319,18 @@ function Projects() {
             >
 
               <Box sx={style}>
-                <div><p style={{ fontSize: 14 }}>
-                  {unittest.commit_id =="" ? <><p>Process is pending</p></> : null}
-                  {unittest.commit_id !=="" ? <><p>Commit Id : {unittest.commit_id}</p></> : null}
-                  </p></div>
+                <div className="row">
+                  <div className="col-md-9">
+                    <p style={{ fontSize: 14 }}>
+                      {unittest.commit_id =="" ? <><p>Process is pending</p></> : null}
+                      {unittest.commit_id !=="" ? <><p>Commit Id : {unittest.commit_id}</p></> : null}
+                    </p>
+                  </div>
+                  <div className="col-md-3">
+                    <p className="btn btn-danger" onClick={handleClose} style={{color:"white",height:20,float:"right",padding:6, paddingTop:0}}>X</p>
+                  </div>
+
+                </div>
                 <div className="col-md-12">
                   <table className="table table-hover">
                     <thead>
