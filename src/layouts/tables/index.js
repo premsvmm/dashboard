@@ -74,7 +74,7 @@ function Tables() {
 
   useEffect(() => {
     axios
-      .get(`https://c1a7-2405-201-d01a-18af-5458-bba5-a957-9f8a.ngrok-free.app/v1/pr`)
+      .get(`https://2607-115-110-224-178.ngrok-free.app/v1/pr`)
       .then((resp) => {
         console.log("resp", resp);
         const data = resp.data;
