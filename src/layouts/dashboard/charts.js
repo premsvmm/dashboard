@@ -1,8 +1,9 @@
+import React,{ useState,useEffect } from "react";
 import DashboardLayout from "../../examples/LayoutContainers/DashboardLayout";
 import { Bar, Line } from "react-chartjs-2";
 import MDBox from "../../components/MDBox";
 import MDTypography from "../../components/MDTypography";
-import React from "react";
+
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 
@@ -44,8 +45,7 @@ const state = {
 }
 
 const barstate = {
-  labels: ['PR#1', 'PR#2', 'PR#3',
-    'PR#4', 'PR#5'],
+  labels: ['PR#1800', 'PR#1801', 'PR#1802'],
 
   datasets: [
 
@@ -56,7 +56,7 @@ const barstate = {
       borderColor: 'rgb(60, 179, 113)',
       backgroundColor: 'rgba(60, 179, 113, 0.5)',
       borderWidth: 2,
-      data: [50, 32, 90, 20, 45]
+      data: [5, 0, 0]
     },{
       label: 'lines not covered',
       fill: false,
@@ -64,12 +64,23 @@ const barstate = {
       borderColor: 'rgb(255, 99, 132)',
       backgroundColor: 'rgba(255, 99, 132, 0.5)',
       borderWidth: 2,
-      data: [47, 75, 22, 27, 36]
+      data: [2, 7, 7]
     },
   ]
 }
+
+
 function charts(){
 
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const [menu, setMenu] = useState([]);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const [showchart,setShowChart] = useState(false)
+
+  const selectoption =()=>{
+    setShowChart(true)
+  }
   return(
     <>
       <DashboardLayout>
@@ -91,6 +102,27 @@ function charts(){
                     Insights
                   </MDTypography>
                 </MDBox>
+                <MDBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
+
+                  <div className="col-md-4">
+                    <select
+                      name="service"
+                      className="form-control col-md-3"
+                      value={menu.service}
+                      onChange={(e) => selectoption(e)}
+                      placeholder="Service name"
+
+                    >
+                      <option name="" value="" style={{ display: "none" }}>Service Name</option>
+
+                      <option name={1} value={1}>scrooge</option>
+                    </select>
+                  </div>
+                </MDBox>
+
+                {showchart===true ? <>
+
+
                 <div className="row">
         <div style={{marginTop:50}} className="col-md-6">
           <Line
@@ -107,6 +139,7 @@ function charts(){
             }}
           />
         </div>
+
                   <div style={{marginTop:50}}  className="col-md-6">
                   <Bar options={{
                     title:{
@@ -128,6 +161,7 @@ function charts(){
                   }} data={barstate} />
                   </div>
                 </div>
+                </> : null}
               </Card>
             </Grid>
           </Grid>

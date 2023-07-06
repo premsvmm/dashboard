@@ -308,7 +308,7 @@ function Projects() {
                 {prdetails.map((list, index) => {
                   return (
                     <tr style={{ fontSize: 14 }} key={index}>
-                      <th scope="row"><a target="_blank" href={`https://github.com/razorpay/scrooge/pull/${list.pr_num}`}>{list.pr_num}</a></th>
+                      <th scope="row"><a target="_blank" href={`https://github.com/razorpay/${selectedservice.service}/pull/${list.pr_num}`}>{list.pr_num}</a></th>
                       <td>{list.branch}</td>
                       <td>{list.github_status !== "pending" ? <><p onClick={() => checkCommitId(list)}>{list.commit_id.slice(0,6)}</p></>:<><p aria-disabled="true">{list.commit_id.slice(0,6)}</p></>}</td>
                       <td>{list.deleted_lines}</td>
