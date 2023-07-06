@@ -42,6 +42,39 @@ function Projects() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const [selectedservice, setselectservice] = useState({
+    "id": '',
+    "integration_threshold": 0,
+    "service": '',
+    "unit_threshold": 0
+  })
+  const [unittest, setunitDetails] = useState({
+    "commit_id": '',
+    "failed": '',
+    "overall_coverage": '',
+    "modified_coverage": '',
+    "pass": '',
+    "skipped": ''
+  })
+  const [e2etest, sete2eTestDetails] = useState({
+    "commit_id": '',
+    "failed": '',
+    "overall_coverage": '',
+    "modified_coverage": '',
+    "pass": '',
+    "skipped": ''
+  })
+  const [integrationcoverage, setintegrationcoverage] = useState({
+    "commit_id": '',
+    "failed": '',
+    "overall_coverage": '',
+    "modified_coverage": '',
+    "pass": '',
+    "skipped": ''
+  })
+
+
 //first API Parsed
   useEffect(() => {
     axios
@@ -57,12 +90,7 @@ function Projects() {
       });
   }, []);
 
-  const [selectedservice, setselectservice] = useState({
-    "id": '',
-    "integration_threshold": 0,
-    "service": '',
-    "unit_threshold": 0
-  })
+
 //Select Service Function
   const selectoption = (e) => {
     console.log(e)
@@ -79,10 +107,6 @@ function Projects() {
       }
     }
     const selectedService = getobject
-    // const selectoption = (e) => {
-    //   console.log(e)
-
-
       console.log("selected", selectedService)
       axios
         .get(`https://c1a7-2405-201-d01a-18af-5458-bba5-a957-9f8a.ngrok-free.app/v1/pr?service_id=` + selectedService)
@@ -97,30 +121,7 @@ function Projects() {
         });
     }
 
-    const [unittest, setunitDetails] = useState({
-      "commit_id": '',
-      "failed": '',
-      "overall_coverage": '',
-      "modified_coverage": '',
-      "pass": '',
-      "skipped": ''
-    })
-    const [e2etest, sete2eTestDetails] = useState({
-      "commit_id": '',
-      "failed": '',
-      "overall_coverage": '',
-      "modified_coverage": '',
-      "pass": '',
-      "skipped": ''
-    })
-    const [integrationcoverage, setintegrationcoverage] = useState({
-      "commit_id": '',
-      "failed": '',
-      "overall_coverage": '',
-      "modified_coverage": '',
-      "pass": '',
-      "skipped": ''
-    })
+
     const checkCommitId = (e) => {
       handleOpen()
       console.log(e)
@@ -318,7 +319,10 @@ function Projects() {
             >
 
               <Box sx={style}>
-                <div><p style={{ fontSize: 14 }}>Commit Id : {unittest.commit_id}</p></div>
+                <div><p style={{ fontSize: 14 }}>
+                  {unittest.commit_id =="" ? <><p>Process is pending</p></> : null}
+                  {unittest.commit_id !=="" ? <><p>Commit Id : {unittest.commit_id}</p></> : null}
+                  </p></div>
                 <div className="col-md-12">
                   <table className="table table-hover">
                     <thead>
@@ -368,7 +372,7 @@ function Projects() {
                       <td>{unittest.skipped}</td>
                       <td>{unittest.overall_coverage}</td>
                       <td>{unittest.modified_coverage}</td>
-                      <td>{unittest.modified_coverage <= selectedservice.integration_threshold && unittest.overall_coverage <= selectedservice.integration_threshold ? "Failed" : "Pass"}</td>
+                      <td>{unittest.modified_coverage <= selectedservice.unit_threshold || unittest.overall_coverage <= selectedservice.unit_threshold ? "Failed" : "Pass"}</td>
                     </tr>
                     <tr style={{ fontSize: 14 }}>
                       <td scope="row">E2E Test</td>
@@ -377,7 +381,7 @@ function Projects() {
                       <td>{e2etest.skipped}</td>
                       <td>{e2etest.overall_coverage}</td>
                       <td>{e2etest.modified_coverage}</td>
-                      <td>{e2etest.modified_coverage <= selectedservice.integration_threshold && e2etest.overall_coverage <= selectedservice.integration_threshold ? "Failed" : "Pass"}</td>
+                      <td>{e2etest.modified_coverage <= selectedservice.integration_threshold || e2etest.overall_coverage <= selectedservice.integration_threshold ? "Failed" : "Pass"}</td>
                     </tr>
                     <tr style={{ fontSize: 14 }}>
                       <td scope="row">Integration Coverage Test</td>
@@ -386,16 +390,12 @@ function Projects() {
                       <td>{integrationcoverage.skipped}</td>
                       <td>{integrationcoverage.overall_coverage}</td>
                       <td>{integrationcoverage.modified_coverage}</td>
-                      <td>{integrationcoverage.modified_coverage <= selectedservice.integration_threshold && integrationcoverage.overall_coverage <= selectedservice.integration_threshold ? "Failed" : "Pass"}</td>
-
+                      <td>{integrationcoverage.modified_coverage <= selectedservice.integration_threshold || integrationcoverage.overall_coverage <= selectedservice.integration_threshold ? "Failed" : "Pass"}</td>
                     </tr>
-
                     </tbody>
                   </table>
                 </div>
-
               </Box>
-
             </Modal>
           </MDBox>
         </Card>
