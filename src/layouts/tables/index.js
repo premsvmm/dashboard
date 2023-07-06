@@ -168,7 +168,7 @@ function Tables() {
                   PR details
                 </MDTypography>
               </MDBox>
-              <div style={{marginTop:30}} className="col-md-12">
+              <div style={{marginTop:50}} className="container">
                 <table className="table table-hover">
                   <thead>
                   <tr style={{ fontSize: 14 }}>

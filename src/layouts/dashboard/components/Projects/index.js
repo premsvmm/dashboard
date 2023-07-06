@@ -267,7 +267,7 @@ function Projects() {
           <MDBox>
 
 
-            <div className="col-md-12">
+            <div className="container">
               <table className="table table-hover">
                 <thead>
                 <tr style={{ fontSize: 14 }}>
@@ -309,7 +309,7 @@ function Projects() {
                     <tr style={{ fontSize: 14 }} key={index}>
                       <th scope="row">{list.pr_num}</th>
                       <td>{list.branch}</td>
-                      <td onClick={() => checkCommitId(list)}>{list.commit_id}</td>
+                      <td>{list.github_status !== "pending" ? <><p onClick={() => checkCommitId(list)}>{list.commit_id}</p></>:<><p aria-disabled="true">{list.commit_id}</p></>}</td>
                       <td>{list.deleted_lines}</td>
                       <td>{list.new_lines}</td>
                       <td>
