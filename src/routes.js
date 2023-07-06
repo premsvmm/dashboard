@@ -47,6 +47,8 @@ import SignUp from "layouts/authentication/sign-up";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
+import { Insights } from "@mui/icons-material";
+import Charts from "./layouts/dashboard/charts";
 
 const routes = [
   {
@@ -65,6 +67,15 @@ const routes = [
     route: "/tables",
     component: <Tables />,
   },
+  {
+    type: "collapse",
+    name: "Insight",
+    key: "insight",
+    icon: <Icon fontSize="small">table_view</Icon>,
+    route: "/insight",
+    component: <Charts />,
+  },
+
 ];
 
 export default routes;
