@@ -56,7 +56,7 @@ const barstate = {
       borderColor: 'rgb(60, 179, 113)',
       backgroundColor: 'rgba(60, 179, 113, 0.5)',
       borderWidth: 2,
-      data: [5, 0, 0]
+      data: [1, 2, 4]
     },{
       label: 'lines not covered',
       fill: false,
@@ -64,7 +64,7 @@ const barstate = {
       borderColor: 'rgb(255, 99, 132)',
       backgroundColor: 'rgba(255, 99, 132, 0.5)',
       borderWidth: 2,
-      data: [2, 7, 7]
+      data: [1, 3, 3]
     },
   ]
 }
