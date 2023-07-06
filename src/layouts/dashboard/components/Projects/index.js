@@ -460,6 +460,7 @@ function Projects() {
                   </table>
 
                   <p style={{fontSize:16}}>Lines Not covered :</p>
+                  <p style={{fontSize:14}}>Unit Tests :</p>
                   <div style={{background:"black", fontSize:14}}>
                   <pre>
                   <code style={{background:"black",color:"white"}}>
@@ -467,6 +468,7 @@ function Projects() {
                   </code>
                   </pre>
                   </div>
+                  <p style={{fontSize:14}}>E2E Tests :</p>
                   <div style={{background:"black", fontSize:14}}>
                   <pre>
                   <code style={{background:"black",color:"white"}}>
@@ -474,6 +476,7 @@ function Projects() {
                   </code>
                   </pre>
                   </div>
+                  <p style={{fontSize:14}}>Integration Tests :</p>
                   <div style={{background:"black", fontSize:14}}>
                   <pre>
                   <code style={{background:"black",color:"white"}}>
@@ -483,7 +486,6 @@ function Projects() {
                   </div>
                 </div>
               </Box>
-
             </Modal>
           </MDBox>
         </Card>
