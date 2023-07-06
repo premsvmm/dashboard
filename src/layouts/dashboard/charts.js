@@ -7,6 +7,7 @@ import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 
 
+
 const state = {
   labels: ['January', 'February', 'March',
     'April', 'May'],
@@ -47,15 +48,7 @@ const barstate = {
     'PR#4', 'PR#5'],
 
   datasets: [
-    {
-      label: 'lines not covered',
-      fill: false,
-      lineTension: 0.5,
-      borderColor: 'rgb(255, 99, 132)',
-      backgroundColor: 'rgba(255, 99, 132, 0.5)',
-      borderWidth: 2,
-      data: [65, 59, 80, 81, 56]
-    },
+
     {
       label: 'lines covered',
       fill: false,
@@ -63,8 +56,16 @@ const barstate = {
       borderColor: 'rgb(60, 179, 113)',
       backgroundColor: 'rgba(60, 179, 113, 0.5)',
       borderWidth: 2,
-      data: [68, 40, 81, 60, 35]
-    }
+      data: [50, 32, 90, 20, 45]
+    },{
+      label: 'lines not covered',
+      fill: false,
+      lineTension: 0.5,
+      borderColor: 'rgb(255, 99, 132)',
+      backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      borderWidth: 2,
+      data: [47, 75, 22, 27, 36]
+    },
   ]
 }
 function charts(){
@@ -97,7 +98,6 @@ function charts(){
             options={{
               title:{
                 display:true,
-                text:'Average Rainfall per month',
                 fontSize:20
               },
               legend:{
@@ -111,13 +111,20 @@ function charts(){
                   <Bar options={{
                     title:{
                       display:true,
-                      text:'Average Rainfall per month',
                       fontSize:20
                     },
                     legend:{
                       display:true,
                       position:'right'
-                    }
+                    },
+                    scales: {
+                      x: {
+                        stacked: true,
+                      },
+                      y: {
+                        stacked: true,
+                      },
+                    },
                   }} data={barstate} />
                   </div>
                 </div>

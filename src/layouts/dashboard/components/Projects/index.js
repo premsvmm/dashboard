@@ -411,7 +411,7 @@ function Projects() {
                         <HtmlTooltip
                         title={
                           <React.Fragment>
-                            {unittest.modified_coverage <= selectedservice.unit_threshold || unittest.overall_coverage <= selectedservice.unit_threshold || unittest.failed > selectedservice.unit_failed_threshold || unittest.skipped > selectedservice.unit_skipped_threshold? <p style={{color:"red"}}>1.Overall Coverage is less than threshold required:50<br/>2.Modified Coverage is less than threshold required:50<br/>3.No. of failed tests are greater than threshold failed tests:5<br/>4.No. of skipped tests are greater than threshold skipped tests:5</p> : "Pass"}
+                            {unittest.modified_coverage <= selectedservice.unit_threshold || unittest.overall_coverage <= selectedservice.unit_threshold || unittest.failed > selectedservice.unit_failed_threshold || unittest.skipped > selectedservice.unit_skipped_threshold? <p style={{color:"red"}}>1.Overall Coverage is less than threshold required:50<br/>2.Modified Coverage is less than threshold required:50<br/>3.No. of failed tests are greater than threshold failed tests:5<br/>4.No. of skipped tests are greater than threshold skipped tests:5</p> : <p style={{color:"green"}}>Quality risk status is Passed.</p>}
                           </React.Fragment>
                         }
                       >
@@ -430,7 +430,7 @@ function Projects() {
                         <HtmlTooltip
                           title={
                             <React.Fragment>
-                              {e2etest.modified_coverage <= selectedservice.integration_threshold || e2etest.overall_coverage <= selectedservice.integration_threshold || e2etest.failed > selectedservice.integration_failed_threshold || e2etest.skipped > selectedservice.integration_skipped_threshold? <p style={{color:"red"}}>1.Overall Coverage is less than threshold required:50<br/>2.Modified Coverage is less than threshold required:50<br/>3.No. of failed tests are greater than threshold failed tests:5<br/>4.No. of skipped tests are greater than threshold skipped tests:5</p> : "Pass"}
+                              {e2etest.modified_coverage <= selectedservice.integration_threshold || e2etest.overall_coverage <= selectedservice.integration_threshold || e2etest.failed > selectedservice.integration_failed_threshold || e2etest.skipped > selectedservice.integration_skipped_threshold? <p style={{color:"red"}}>1.Overall Coverage is less than threshold required:50<br/>2.Modified Coverage is less than threshold required:50<br/>3.No. of failed tests are greater than threshold failed tests:5<br/>4.No. of skipped tests are greater than threshold skipped tests:5</p> : <p style={{color:"green"}}>Quality risk status is Passed.</p>}
                             </React.Fragment>
                           }
                         >
@@ -449,7 +449,7 @@ function Projects() {
                       <td> <HtmlTooltip
                         title={
                           <React.Fragment>
-                            {integrationcoverage.modified_coverage <= selectedservice.integration_threshold || integrationcoverage.overall_coverage <= selectedservice.integration_threshold || integrationcoverage.failed > selectedservice.integration_failed_threshold || integrationcoverage.skipped > selectedservice.integration_skipped_threshold? <p style={{color:"red"}}>1.Overall Coverage is less than threshold required:50<br/>2.Modified Coverage is less than threshold required:50<br/>3.No. of failed tests are greater than threshold failed tests:5<br/>4.No. of skipped tests are greater than threshold skipped tests:5</p> : "Pass"}
+                            {integrationcoverage.modified_coverage <= selectedservice.integration_threshold || integrationcoverage.overall_coverage <= selectedservice.integration_threshold || integrationcoverage.failed > selectedservice.integration_failed_threshold || integrationcoverage.skipped > selectedservice.integration_skipped_threshold? <p style={{color:"red"}}>1.Overall Coverage is less than threshold required:50<br/>2.Modified Coverage is less than threshold required:50<br/>3.No. of failed tests are greater than threshold failed tests:5<br/>4.No. of skipped tests are greater than threshold skipped tests:5</p> : <p style={{color:"green"}}>Quality risk status is Passed.</p>}
                           </React.Fragment>
                         }
                       >
