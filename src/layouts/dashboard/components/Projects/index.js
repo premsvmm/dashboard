@@ -309,7 +309,7 @@ function Projects() {
                     <tr style={{ fontSize: 14 }} key={index}>
                       <th scope="row">{list.pr_num}</th>
                       <td>{list.branch}</td>
-                      <td>{list.github_status !== "pending" ? <><p onClick={() => checkCommitId(list)}>{list.commit_id}</p></>:<><p aria-disabled="true">{list.commit_id}</p></>}</td>
+                      <td>{list.github_status !== "pending" ? <><p onClick={() => checkCommitId(list)}>{list.commit_id.slice(0,6)}</p></>:<><p aria-disabled="true">{list.commit_id.slice(0,6)}</p></>}</td>
                       <td>{list.deleted_lines}</td>
                       <td>{list.new_lines}</td>
                       <td>
@@ -339,12 +339,11 @@ function Projects() {
               aria-describedby="modal-modal-description"
             >
 
-              <Box sx={style}>
+              <Box  style={{overflow: "scroll",height:700}} sx={style}>
                 <div className="row">
                   <div className="col-md-9">
                     <p style={{ fontSize: 14 }}>
-                      {unittest.commit_id =="" ? <><p>Process is pending</p></> : null}
-                      {unittest.commit_id !=="" ? <><p>Commit Id : {unittest.commit_id}</p></> : null}
+                      {unittest.commit_id !=="" ? <><p>Commit Id : {unittest.commit_id.slice(0.6)}</p></> : null}
                     </p>
                   </div>
                   <div className="col-md-3">

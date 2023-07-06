@@ -35,8 +35,8 @@ const state = {
       label: 'overall lines added',
       fill: false,
       lineTension: 0.5,
-      borderColor: 'rgb(60, 179, 113)',
-      backgroundColor: 'rgba(60, 179, 113, 0.5)',
+      borderColor: 'rgb(0, 150, 255)',
+      backgroundColor: 'rgba(0, 150, 255, 0.5)',
       borderWidth: 2,
       data: [133, 99, 161, 141, 91]
     }
