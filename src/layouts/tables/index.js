@@ -219,8 +219,8 @@ function Tables() {
                         <td><a target="_blank" href={`https://github.com/razorpay/${list.service}/pull/${list.pr_num}`}>{list.pr_num}</a></td>
                         <td>{list.branch}</td>
                         <td onClick={() => checkCommitId(list)}>{list.commit_id.slice(0,6)}</td>
-                        <td>{list.deleted_lines}</td>
                         <td>{list.new_lines}</td>
+                        <td>{list.deleted_lines}</td>
                         <td>
                           <HtmlTooltip
                             title={

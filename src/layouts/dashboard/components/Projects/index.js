@@ -311,8 +311,8 @@ function Projects() {
                       <th scope="row"><a target="_blank" href={`https://github.com/razorpay/${selectedservice.service}/pull/${list.pr_num}`}>{list.pr_num}</a></th>
                       <td>{list.branch}</td>
                       <td>{list.github_status !== "pending" ? <><p onClick={() => checkCommitId(list)}>{list.commit_id.slice(0,6)}</p></>:<><p aria-disabled="true">{list.commit_id.slice(0,6)}</p></>}</td>
-                      <td>{list.deleted_lines}</td>
                       <td>{list.new_lines}</td>
+                      <td>{list.deleted_lines}</td>
                       <td>
                         <HtmlTooltip
                           title={
